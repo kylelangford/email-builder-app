@@ -1,0 +1,99 @@
+<div class="main" data-ng-controller="templateController as ctrl">
+  <div class="sidebar">
+    <div class="sidebar--inner">
+      <div class="search-project">
+        <label>PROJECTS
+        <span class="btn icon-search"></span>
+        <input type="text" data-ng-model="filter.name" />
+        </label>
+      </div>
+      <ul class="project-list">
+        <li data-ng-repeat="item in ctrl.content | filter:filter.name | orderBy:'date'">
+          <span class="project-name">{{ item.name }}</span>
+          <span class="clone-project icon icon-plus" data-ng-click="ctrl.copyContent(item)"></span>
+          <span class="edit-project icon icon-cog" data-ng-click="ctrl.loadProject(item)"></span>
+          <span class="remove-project icon-trash-o icon" data-ng-click="ctrl.removeProject(item)"></span>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+  <div class="content-main">
+
+    <div class="email-wrapper">
+      <div class="email">
+
+        <div class="subject-line">{{ ctrl.content[ctrl.currentProject].name }}</div>
+
+        <div class="email-body">
+
+          <div class="add-block-component">
+            <p>SELECT TEMPLATE BLOCK</p>
+            <select ng-model="templateselect">
+              <option value="spacer">Spacer</option>
+              <option value="featureImage">Feature Image</option>
+              <option value="featureMessage">Feature Message</option>
+              <option value="imageTextRed">Image Text Red</option>
+              <option value="textImageRed">Text Image Red</option>
+              <option value="imageTextGrey">Image Text Grey</option>
+              <option value="textImageGrey">Text Image Grey</option>
+              <option value="productTwo">Product Two</option>
+              <option value="productThree">Product Three</option>
+              <option value="imageText">Image Text</option>
+              <option value="textImage">Text Image</option>
+              <option value="splitImage">Split Image</option>
+              <option value="gridThree">Grid Three</option>
+              <option value="header">Header</option>
+              <option value="footer">Footer</option>
+            </select>
+
+            <button class="add-block" data-ng-click="ctrl.addTemplate(templateselect)">Add Block</button>
+
+          </div>
+
+          <div class="content">
+
+            <div class="block-list" ng-model="ctrl.content[ctrl.currentProject].blocks" ui-sortable="sortableOptions">
+              <block ng-repeat="item in ctrl.content[ctrl.currentProject].blocks" content="item" class="block" on-remove="ctrl.content[ctrl.currentProject].blocks.splice($index,1)"></block>
+            </div>
+
+            <div class="clear"></div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="resize-canvas"></div>
+    </div>
+
+    <div class="exportContents">
+      <textarea rows="4">
+
+      </textarea>
+    </div>
+
+    <div class="edit-project-component">
+
+      <div class="project-add" id="popupContainer">
+        <h3>NEW PROJECT</h3>
+        <label>NAME<br>
+        <input type="text" data-ng-model="newProject.name" />
+        </label><br>
+        <label>SUBJECT<br>
+        <input type="text" data-ng-model="newProject.subject" />
+        </label><br>
+        <button class="add-project" data-ng-click="ctrl.addProject(newProject)">Add Project</button>
+
+        <div class="toolbar">
+          <div><a class="button save" data-ng-click="ctrl.saveContent()">Save Projects</a></div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+<!-- Main -->
